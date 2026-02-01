@@ -28,6 +28,7 @@ pub enum Notification {
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct SignalValuesInRange {
+    pub time_range: Range<LogicalTime>,
     pub values_in_range: Vec<NewValuesEnum>,
 }
 
@@ -51,7 +52,6 @@ impl NewValuesEnum {
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct NewValues<Value> {
-    pub time_range: Range<LogicalTime>,
     pub signal_instance_id: SignalInstanceId,
     pub timestamps: Vec<LogicalTime>,
     pub values: Vec<Value>,

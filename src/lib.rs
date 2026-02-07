@@ -45,6 +45,23 @@ pub enum Logic {
     DontCare,
 }
 
+impl Display for Logic {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let symbol = match self {
+            Logic::U => 'U',
+            Logic::X => 'X',
+            Logic::Zero => '0',
+            Logic::One => '1',
+            Logic::Z => 'Z',
+            Logic::W => 'W',
+            Logic::L => 'L',
+            Logic::H => 'H',
+            Logic::DontCare => '-',
+        };
+        Display::fmt(&symbol, f)
+    }
+}
+
 impl FromStr for Logic {
     type Err = &'static str;
 

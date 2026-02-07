@@ -6,6 +6,7 @@ use std::ops::Range;
 use serde::Deserialize;
 use serde::Serialize;
 
+// TODO should this be an i64 to reflect VHDL's time type
 #[derive(
     Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Default, Serialize, Deserialize, Hash,
 )]

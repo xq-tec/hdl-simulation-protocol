@@ -16,11 +16,11 @@ pub type SignalName = String;
 pub type SimulationId = u64;
 
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
+#[repr(u8)]
 pub enum SimulationStatus {
-    NotStarted,
-    Running,
-    Paused,
-    Stopped,
+    Paused = 0,
+    Running = 1,
+    Stopped = 2,
 }
 
 #[derive(Debug, Clone, Copy, Serialize, Deserialize)]

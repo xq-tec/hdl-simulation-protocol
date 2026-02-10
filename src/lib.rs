@@ -13,7 +13,6 @@ use serde::Serialize;
 
 pub type DesignHierarchyEntryName = String;
 pub type SignalName = String;
-pub type SimulationId = u64;
 
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
 #[repr(u8)]

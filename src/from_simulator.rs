@@ -6,18 +6,11 @@ use serde::Serialize;
 use crate::Logic;
 use crate::SignalInstanceId;
 use crate::SignalValueType;
-use crate::SimulationId;
 use crate::design_hierarchy::DesignHierarchy;
 use crate::time::LogicalTime;
 
-#[derive(Serialize, Deserialize, Debug)]
-pub struct SimulationUpdate {
-    pub simulation_id: SimulationId,
-    pub message: Notification,
-}
-
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub enum Notification {
+pub enum SimulationUpdate {
     SimulationStarted,
     SimulationPaused,
     SimulationResumed,

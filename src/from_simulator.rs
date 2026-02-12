@@ -16,12 +16,11 @@ pub enum SimulationUpdate {
     SimulationResumed,
     SimulationStopped,
     DesignHierarchy(DesignHierarchy),
-    SignalValuesInRange(SignalValuesInRange),
-    NewSimulationTime(LogicalTime),
+    Events(EventsUpdate),
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct SignalValuesInRange {
+pub struct EventsUpdate {
     pub time_range: Range<LogicalTime>,
     pub values_in_range: Vec<NewValuesEnum>,
 }

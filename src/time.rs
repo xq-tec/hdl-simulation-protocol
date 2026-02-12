@@ -1,5 +1,4 @@
 use std::fmt;
-use std::fmt::Display;
 use std::ops;
 use std::ops::Range;
 
@@ -7,9 +6,7 @@ use serde::Deserialize;
 use serde::Serialize;
 
 // TODO should this be an i64 to reflect VHDL's time type
-#[derive(
-    Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Default, Serialize, Deserialize, Hash,
-)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Default, Serialize, Deserialize, Hash)]
 pub struct PhysicalTime(pub u64);
 
 impl PhysicalTime {
@@ -103,13 +100,13 @@ impl ops::Mul for PhysicalTime {
     }
 }
 
-impl Display for PhysicalTime {
+impl fmt::Debug for PhysicalTime {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        self.0.fmt(formatter)
+        write!(formatter, "PhysicalTime({time} fs)", time = self.0)
     }
 }
 
-#[derive(Clone, Copy, Serialize, Deserialize, Debug, Hash, Default, PartialEq)]
+#[derive(Clone, Copy, Serialize, Deserialize, Hash, Default, PartialEq)]
 pub struct LogicalTime {
     pub physical: PhysicalTime,
     pub delta: Delta,
@@ -134,13 +131,20 @@ impl LogicalTime {
     };
 }
 
-impl Display for LogicalTime {
+impl fmt::Display for LogicalTime {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
             formatter,
-            "LogicalTime(physical: {}, delta: {})",
-            self.physical.0, self.delta
+            "({time} fs, {delta})",
+            time = self.physical.0,
+            delta = self.delta,
         )
+    }
+}
+
+impl fmt::Debug for LogicalTime {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        fmt::Display::fmt(self, formatter)
     }
 }
 
@@ -234,9 +238,9 @@ impl ops::Add for Delta {
     }
 }
 
-impl Display for Delta {
+impl fmt::Display for Delta {
     fn fmt(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
-        self.0.fmt(formatter)
+        write!(formatter, "{delta} δ", delta = self.0)
     }
 }
 

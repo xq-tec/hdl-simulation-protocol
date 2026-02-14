@@ -9,4 +9,5 @@ repository = "https://github.com/xq-tec/hdl-simulation-protocol"
 rust-version = "1.91.0"
 
 [dependencies]
+compact_str = { version = "0.9", features = ["serde"] }
 serde = { version = "1", features = ["derive"] }

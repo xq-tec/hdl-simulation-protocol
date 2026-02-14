@@ -1,9 +1,12 @@
+use compact_str::CompactString;
 use serde::Deserialize;
 use serde::Serialize;
 
-use crate::DesignHierarchyEntryName;
 use crate::SignalInstanceId;
 use crate::SignalValueType;
+
+pub type DesignHierarchyEntryName = CompactString;
+pub type SignalName = CompactString;
 
 #[derive(Clone, Copy, Serialize, Deserialize, Debug)]
 pub enum DesignHierarchySignalType {

@@ -11,9 +11,6 @@ use std::str::FromStr;
 use serde::Deserialize;
 use serde::Serialize;
 
-pub type DesignHierarchyEntryName = String;
-pub type SignalName = String;
-
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
 #[repr(u8)]
 pub enum SimulationStatus {

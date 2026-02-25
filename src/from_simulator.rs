@@ -3,8 +3,8 @@ use std::ops::Range;
 use serde::Deserialize;
 use serde::Serialize;
 
-use crate::SignalInstanceId;
 use crate::design_hierarchy::DesignHierarchy;
+use crate::design_hierarchy::SignalInstanceId;
 use crate::time::LogicalTime;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]

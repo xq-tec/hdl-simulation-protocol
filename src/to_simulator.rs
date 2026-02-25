@@ -1,7 +1,7 @@
 use serde::Deserialize;
 use serde::Serialize;
 
-use crate::SignalInstanceId;
+use crate::design_hierarchy::SignalInstanceId;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum Command {

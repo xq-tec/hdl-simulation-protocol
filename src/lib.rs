@@ -5,7 +5,6 @@ pub mod to_simulator;
 
 use std::fmt;
 use std::fmt::Display;
-use std::num::NonZeroU32;
 use std::str::FromStr;
 
 use serde::Deserialize;
@@ -92,17 +91,5 @@ impl TryFrom<u8> for Logic {
             7 => Ok(Logic::H),
             _ => Err(()),
         }
-    }
-}
-
-/// Identifier for an instantiated signal in the design hierarchy.
-///
-/// These IDs are only stable during a simulation, not across multiple simulations.
-#[derive(Copy, Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
-pub struct SignalInstanceId(pub NonZeroU32);
-
-impl Display for SignalInstanceId {
-    fn fmt(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
-        Display::fmt(&self.0.get(), formatter)
     }
 }

@@ -5,8 +5,12 @@ use std::ops::Range;
 use serde::Deserialize;
 use serde::Serialize;
 
-// TODO should this be an i64 to reflect VHDL's time type
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Default, Serialize, Deserialize, Hash)]
+use crate::serde_utils;
+
+/// This type is serialized as a string-encoded integer for human-readable formats,
+/// and as a raw integer for binary formats.
+// TODO should this be an i64 to reflect VHDL's time type?
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Default, Hash)]
 pub struct PhysicalTime(pub u64);
 
 impl PhysicalTime {
@@ -59,17 +63,6 @@ impl ops::Rem for PhysicalTime {
     }
 }
 
-impl From<f64> for PhysicalTime {
-    fn from(value: f64) -> Self {
-        #[expect(
-            clippy::cast_possible_truncation,
-            clippy::cast_sign_loss,
-            reason = "required for JavaScript value conversion"
-        )]
-        Self(value as u64)
-    }
-}
-
 impl ops::Add for PhysicalTime {
     type Output = Self;
 
@@ -103,6 +96,24 @@ impl ops::Mul for PhysicalTime {
 impl fmt::Debug for PhysicalTime {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(formatter, "PhysicalTime({time} fs)", time = self.0)
+    }
+}
+
+impl Serialize for PhysicalTime {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        serde_utils::serialize(&self.0, serializer)
+    }
+}
+
+impl<'de> Deserialize<'de> for PhysicalTime {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        serde_utils::deserialize(deserializer, "a string-encoded u64").map(Self)
     }
 }
 
@@ -214,9 +225,9 @@ impl From<(u64, u64)> for LogicalTime {
     }
 }
 
-#[derive(
-    Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Default, Serialize, Deserialize, Hash,
-)]
+/// This type is serialized as a string-encoded integer for human-readable formats,
+/// and as a raw integer for binary formats.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Default, Hash)]
 pub struct Delta(pub u64);
 
 impl Delta {
@@ -265,5 +276,23 @@ impl ops::Sub<Delta> for Delta {
 
     fn sub(self, rhs: Delta) -> Self::Output {
         Delta(self.0 - rhs.0)
+    }
+}
+
+impl Serialize for Delta {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        serde_utils::serialize(&self.0, serializer)
+    }
+}
+
+impl<'de> Deserialize<'de> for Delta {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        serde_utils::deserialize(deserializer, "a string-encoded u64").map(Self)
     }
 }

@@ -22,7 +22,8 @@ pub enum SimulationStatus {
 #[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub enum SignalValueType {
     F64,
-    U8,
+    I32,
+    I64,
     Logic,
 }
 

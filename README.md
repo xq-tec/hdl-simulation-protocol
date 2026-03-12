@@ -228,7 +228,6 @@ Signal or variable declaration:
 pub struct Signal {
     pub name: CompactString,
     pub id: SignalInstanceId,
-    pub sub_id_start: Option<SignalInstanceId>,  // For arrays
     pub typ: SignalType,
 }
 ```

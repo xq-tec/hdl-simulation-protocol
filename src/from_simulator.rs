@@ -4,7 +4,7 @@ use serde::Deserialize;
 use serde::Serialize;
 
 use crate::design_hierarchy::DesignHierarchy;
-use crate::design_hierarchy::SignalInstanceId;
+use crate::design_hierarchy::SignalElementId;
 use crate::time::LogicalTime;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -25,21 +25,21 @@ pub struct EventsUpdate {
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct SignalEvents {
-    pub signal_instance_id: SignalInstanceId,
+    pub element_id: SignalElementId,
     pub events: Vec<Event>,
 }
 
 impl SignalEvents {
-    pub fn new(signal_instance_id: SignalInstanceId) -> Self {
+    pub fn new(element_id: SignalElementId) -> Self {
         Self {
-            signal_instance_id,
+            element_id,
             events: vec![],
         }
     }
 
     pub fn clone_empty(&self) -> Self {
         Self {
-            signal_instance_id: self.signal_instance_id,
+            element_id: self.element_id,
             events: vec![],
         }
     }

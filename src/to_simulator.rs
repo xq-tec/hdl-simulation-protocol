@@ -1,7 +1,7 @@
 use serde::Deserialize;
 use serde::Serialize;
 
-use crate::design_hierarchy::SignalInstanceId;
+use crate::design_hierarchy::SignalElementId;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum Command {
@@ -16,7 +16,7 @@ pub enum Command {
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct SignalTrackingRequest {
-    pub signal_instance_ids: Vec<SignalInstanceId>,
+    pub signal_element_ids: Vec<SignalElementId>,
     /// True => tracking is required for this client. False => tracking no longer required for this client
     pub enabled: bool,
     // TODO better handling for unTracking

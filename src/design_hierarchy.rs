@@ -8,13 +8,19 @@ use serde::Serialize;
 /// Identifier for an instantiated signal in the design hierarchy.
 ///
 /// These IDs are only stable during a simulation, not across multiple simulations.
-#[derive(Copy, Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
+#[derive(Copy, Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq, PartialOrd, Ord)]
 pub struct SignalInstanceId(pub NonZeroU32);
 
 impl fmt::Display for SignalInstanceId {
     fn fmt(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt::Display::fmt(&self.0.get(), formatter)
     }
+}
+
+#[derive(Copy, Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq, PartialOrd, Ord)]
+pub struct SignalElementId {
+    pub signal_id: SignalInstanceId,
+    pub element_index: u32,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
@@ -47,7 +53,6 @@ pub enum ModuleKind {
 pub struct Signal {
     pub name: CompactString,
     pub id: SignalInstanceId,
-    pub sub_id_start: Option<SignalInstanceId>,
     pub typ: SignalType,
 }
 

@@ -75,6 +75,8 @@ pub enum SignalType {
         left: i32,
         right: i32,
         direction: Direction,
+        /// The total number of scalar elements in the array, including nested arrays.
+        element_count: u32,
         element_type: Box<SignalType>,
     },
 }
@@ -83,4 +85,25 @@ pub enum SignalType {
 pub enum Direction {
     To,
     Downto,
+}
+
+impl Direction {
+    pub fn length_for(&self, left: i32, right: i32) -> u32 {
+        match self {
+            Direction::To => {
+                if right >= left {
+                    (right - left + 1) as u32
+                } else {
+                    0
+                }
+            },
+            Direction::Downto => {
+                if left >= right {
+                    (left - right + 1) as u32
+                } else {
+                    0
+                }
+            },
+        }
+    }
 }

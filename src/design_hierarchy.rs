@@ -79,6 +79,7 @@ pub enum SignalType {
         element_count: u32,
         element_type: Box<SignalType>,
     },
+    Unsupported,
 }
 
 #[derive(Clone, Copy, Serialize, Deserialize, Debug)]

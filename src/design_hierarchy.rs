@@ -23,8 +23,14 @@ pub struct SignalElementId {
     pub element_index: u32,
 }
 
+/// Elaborated design tree for one simulation instance.
+///
+/// `simulation_id` is a 53-bit instance identifier assigned by the simulator; it matches the
+/// marker filename and must be set before the hierarchy is sent to clients.
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct DesignHierarchy {
+    /// Stable identifier for this simulation run (53-bit value, carried as `u64`).
+    pub simulation_id: u64,
     pub root_modules: Vec<Module>,
 }
 

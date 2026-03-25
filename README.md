@@ -191,6 +191,8 @@ Root of the design tree:
 
 ```rust
 pub struct DesignHierarchy {
+    /// 53-bit instance id (matches marker filename id); set before sending to clients.
+    pub simulation_id: u64,
     pub root_modules: Vec<Module>,
 }
 ```

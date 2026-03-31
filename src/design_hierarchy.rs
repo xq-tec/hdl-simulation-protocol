@@ -31,6 +31,8 @@ pub struct SignalElementId {
 pub struct DesignHierarchy {
     /// Stable identifier for this simulation run (53-bit value, carried as `u64`).
     pub simulation_id: u64,
+    /// An optional name or description of this simulation.
+    pub name: Option<CompactString>,
     pub root_modules: Vec<Module>,
 }
 

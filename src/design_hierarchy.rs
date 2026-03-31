@@ -39,7 +39,7 @@ pub struct DesignHierarchy {
 pub struct Module {
     /// The instance name for [design entities](ModuleKind::DesignEntity),
     /// the package name for [packages](ModuleKind::Package).
-    pub name: CompactString,
+    pub name: Option<CompactString>,
 
     pub kind: ModuleKind,
     pub submodules: Vec<Module>,

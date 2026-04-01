@@ -83,11 +83,33 @@ pub enum SignalType {
         left: i32,
         right: i32,
         direction: Direction,
-        /// The total number of scalar elements in the array, including nested arrays.
+        /// The total number of scalar elements in the array, including nested types.
         element_count: u32,
         element_type: Box<SignalType>,
     },
+    Record {
+        fields: Vec<RecordField>,
+        /// The total number of scalar elements in the record, including nested types.
+        element_count: u32,
+    },
     Unsupported,
+}
+
+impl SignalType {
+    pub fn element_count(&self) -> u32 {
+        match *self {
+            SignalType::Array { element_count, .. } => element_count,
+            SignalType::Record { element_count, .. } => element_count,
+            _ => 1,
+        }
+    }
+}
+#[derive(Clone, Serialize, Deserialize, Debug)]
+pub struct RecordField {
+    pub name: CompactString,
+    pub typ: SignalType,
+    /// The offset of this field's elements within the record, starting from 0.
+    pub element_offset: u32,
 }
 
 #[derive(Clone, Copy, Serialize, Deserialize, Debug)]

@@ -17,6 +17,11 @@ impl fmt::Display for SignalInstanceId {
     }
 }
 
+/// Uniquely identifies a scalar element within a signal.
+///
+/// Signals can have a scalar or an aggregate (array, record) type.
+/// For aggregate types, all recursively contained scalar elements are indexed sequentially through the [element index](Self::element_index).
+/// For signals of a scalar type, the element index is always 0.
 #[derive(Copy, Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq, PartialOrd, Ord)]
 pub struct SignalElementId {
     pub signal_id: SignalInstanceId,

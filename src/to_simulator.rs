@@ -3,18 +3,17 @@ use serde::Serialize;
 
 use crate::design_hierarchy::SignalElementId;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum Command {
     StartSimulation,
     PauseSimulation,
     ResumeSimulation,
-    RestartSimulation,
     StopSimulation,
 
     TrackSignals(SignalTrackingRequest),
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct SignalTrackingRequest {
     pub signal_element_ids: Vec<SignalElementId>,
     /// True => tracking is required for this client. False => tracking no longer required for this client

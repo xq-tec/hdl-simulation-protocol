@@ -5,6 +5,8 @@ use compact_str::CompactString;
 use serde::Deserialize;
 use serde::Serialize;
 
+use crate::SimulationInstanceId;
+
 /// Identifier for an instantiated signal in the design hierarchy.
 ///
 /// These IDs are only stable during a simulation, not across multiple simulations.
@@ -24,13 +26,12 @@ pub struct SignalElementId {
 }
 
 /// Elaborated design tree for one simulation instance.
-///
-/// `simulation_id` is a 53-bit instance identifier assigned by the simulator; it matches the
-/// marker filename and must be set before the hierarchy is sent to clients.
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct DesignHierarchy {
-    /// Stable identifier for this simulation run (53-bit value, carried as `u64`).
-    pub simulation_id: u64,
+    /// A unique simulation instance identifier assigned by the simulator.
+    ///
+    /// It matches the marker filename and must be set before the hierarchy is sent to clients.
+    pub simulation_id: SimulationInstanceId,
     /// An optional name or description of this simulation.
     pub name: Option<CompactString>,
     pub root_modules: Vec<Module>,

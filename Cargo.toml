@@ -10,4 +10,5 @@ rust-version = "1.91.0"
 
 [dependencies]
 compact_str = { version = "0.9", features = ["serde"] }
+getrandom = "0.4"
 serde = { version = "1", features = ["derive"] }

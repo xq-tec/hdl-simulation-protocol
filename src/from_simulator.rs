@@ -51,6 +51,7 @@ pub struct Event {
     pub value: RawValue,
 }
 
+/// Raw 64-bit representation of a scalar signal value.
 #[derive(Clone, Copy, Debug, Serialize, Deserialize)]
 pub struct RawValue(pub u64);
 

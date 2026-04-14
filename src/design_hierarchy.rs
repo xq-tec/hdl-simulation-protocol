@@ -5,7 +5,7 @@ use compact_str::CompactString;
 use serde::Deserialize;
 use serde::Serialize;
 
-use crate::SimulationInstanceId;
+use crate::SimulationId;
 
 /// Identifier for an instantiated signal in the design hierarchy.
 ///
@@ -36,7 +36,7 @@ pub struct DesignHierarchy {
     /// A unique simulation instance identifier assigned by the simulator.
     ///
     /// It matches the marker filename and must be set before the hierarchy is sent to clients.
-    pub simulation_id: SimulationInstanceId,
+    pub simulation_id: SimulationId,
     /// An optional name or description of this simulation.
     pub name: Option<CompactString>,
     pub root_modules: Vec<Module>,

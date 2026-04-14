@@ -2,7 +2,7 @@
 
 use std::path::PathBuf;
 
-use crate::SimulationInstanceId;
+use crate::SimulationId;
 
 /// Subdirectory of [`std::env::temp_dir()`] where marker files are stored.
 pub const SERVER_MARKER_SUBDIR: &str = "hdl-sim";
@@ -23,16 +23,16 @@ pub fn markers_directory() -> PathBuf {
 ///
 /// File name format: `{port}-{simulation_id:014x}.server` (lowercase hex).
 #[must_use]
-pub fn marker_path(port: u16, simulation_id: SimulationInstanceId) -> PathBuf {
+pub fn marker_path(port: u16, simulation_id: SimulationId) -> PathBuf {
     markers_directory().join(format!("{port}-{simulation_id}{SERVER_MARKER_SUFFIX}"))
 }
 
 /// Parses `port` and `simulation_id` from a marker filename such as `54321-01a2b3c4d5e6f7.server`.
 #[must_use]
-pub fn parse_marker_file_name(file_name: &str) -> Option<(u16, SimulationInstanceId)> {
+pub fn parse_marker_file_name(file_name: &str) -> Option<(u16, SimulationId)> {
     let stem = file_name.strip_suffix(SERVER_MARKER_SUFFIX)?;
     let (port_str, id_str) = stem.rsplit_once('-')?;
-    if id_str.len() != SimulationInstanceId::HEX_DIGITS {
+    if id_str.len() != SimulationId::HEX_DIGITS {
         return None;
     }
     let simulation_id = id_str.parse().ok()?;

@@ -18,9 +18,11 @@ use serde::Serialize;
 /// being within the safe integer range.
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, Hash, PartialOrd, Ord)]
 #[repr(transparent)]
-pub struct SimulationInstanceId(NonZeroU64);
+pub struct SimulationId(u64);
 
-impl SimulationInstanceId {
+impl SimulationId {
+    pub const ZERO: Self = Self(0);
+
     /// Number of bits which can safely by represented in a JavaScript number.
     const BITS: u32 = 53;
     const MASK: u64 = (1u64 << Self::BITS) - 1;
@@ -42,23 +44,23 @@ impl SimulationInstanceId {
         // retry until we get a non-zero id
         loop {
             if let Some(id) = NonZeroU64::new(random_u64() & Self::MASK) {
-                return Self(id);
+                return Self(id.get());
             }
         }
     }
 
     pub const fn get(&self) -> u64 {
-        self.0.get()
+        self.0
     }
 }
 
-impl Display for SimulationInstanceId {
+impl Display for SimulationId {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{:0width$x}", self.0, width = Self::HEX_DIGITS)
     }
 }
 
-impl FromStr for SimulationInstanceId {
+impl FromStr for SimulationId {
     type Err = String;
 
     fn from_str(value: &str) -> Result<Self, Self::Err> {
@@ -68,7 +70,7 @@ impl FromStr for SimulationInstanceId {
     }
 }
 
-impl TryFrom<u64> for SimulationInstanceId {
+impl TryFrom<u64> for SimulationId {
     type Error = String;
 
     fn try_from(value: u64) -> Result<Self, Self::Error> {
@@ -79,9 +81,7 @@ impl TryFrom<u64> for SimulationInstanceId {
                 end = Self::RANGE.end(),
             ));
         }
-        NonZeroU64::new(value)
-            .map(Self)
-            .ok_or_else(|| "simulation instance id may not be zero".to_owned())
+        Ok(Self(value))
     }
 }
 

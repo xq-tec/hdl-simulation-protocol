@@ -85,9 +85,10 @@ impl TryFrom<u64> for SimulationId {
     }
 }
 
-#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
+#[derive(Debug, Default, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
 #[repr(u8)]
 pub enum SimulationStatus {
+    #[default]
     Paused = 0,
     Running = 1,
     Stopped = 2,

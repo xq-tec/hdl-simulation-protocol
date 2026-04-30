@@ -30,6 +30,19 @@ pub struct SignalElementId {
     pub element_index: u32,
 }
 
+impl SignalElementId {
+    pub fn new(signal_id: SignalInstanceId, element_index: u32) -> Self {
+        Self {
+            signal_id,
+            element_index,
+        }
+    }
+
+    pub fn new_scalar(signal_id: SignalInstanceId) -> Self {
+        Self::new(signal_id, 0)
+    }
+}
+
 /// Elaborated design tree for one simulation instance.
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct DesignHierarchy {

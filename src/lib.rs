@@ -148,7 +148,7 @@ impl FromStr for Logic {
             "L" => Ok(Logic::L),
             "H" => Ok(Logic::H),
             "-" => Ok(Logic::DontCare),
-            _ => Err("input does not match any enum"),
+            _ => Err("input does not match any std_logic value"),
         }
     }
 }
@@ -166,6 +166,7 @@ impl TryFrom<u8> for Logic {
             5 => Ok(Logic::W),
             6 => Ok(Logic::L),
             7 => Ok(Logic::H),
+            8 => Ok(Logic::DontCare),
             _ => Err(()),
         }
     }

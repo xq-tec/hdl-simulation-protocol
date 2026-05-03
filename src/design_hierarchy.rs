@@ -52,6 +52,9 @@ pub struct DesignHierarchy {
     pub simulation_id: SimulationId,
     /// An optional name or description of this simulation.
     pub name: Option<CompactString>,
+    /// The time the simulation was started, in seconds since the UNIX epoch.
+    pub start_time: f64,
+
     pub root_modules: Vec<Module>,
 }
 

@@ -24,7 +24,7 @@ impl fmt::Display for SignalInstanceId {
 /// Signals can have a scalar or an aggregate (array, record) type.
 /// For aggregate types, all recursively contained scalar elements are indexed sequentially through the [element index](Self::element_index).
 /// For signals of a scalar type, the element index is always 0.
-#[derive(Copy, Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Copy, Clone, Serialize, Deserialize, Hash, PartialEq, Eq, PartialOrd, Ord)]
 pub struct SignalElementId {
     pub signal_id: SignalInstanceId,
     pub element_index: u32,
@@ -40,6 +40,17 @@ impl SignalElementId {
 
     pub fn new_scalar(signal_id: SignalInstanceId) -> Self {
         Self::new(signal_id, 0)
+    }
+}
+
+impl fmt::Debug for SignalElementId {
+    fn fmt(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(
+            formatter,
+            "SignalElementId({signal}[{element}])",
+            signal = self.signal_id,
+            element = self.element_index,
+        )
     }
 }
 

@@ -31,14 +31,14 @@ pub struct SignalElementId {
 }
 
 impl SignalElementId {
-    pub fn new(signal_id: SignalInstanceId, element_index: u32) -> Self {
+    pub const fn new(signal_id: SignalInstanceId, element_index: u32) -> Self {
         Self {
             signal_id,
             element_index,
         }
     }
 
-    pub fn new_scalar(signal_id: SignalInstanceId) -> Self {
+    pub const fn new_scalar(signal_id: SignalInstanceId) -> Self {
         Self::new(signal_id, 0)
     }
 }

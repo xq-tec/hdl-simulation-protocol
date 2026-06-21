@@ -34,7 +34,6 @@ impl ops::Sub<Self> for PhysicalTime {
     type Output = Self;
 
     fn sub(self, rhs: Self) -> Self::Output {
-        // TODO is this what we want?
         Self(self.0.saturating_sub(rhs.0))
     }
 }
@@ -55,6 +54,14 @@ impl ops::Mul<u64> for PhysicalTime {
     }
 }
 
+impl ops::Mul<PhysicalTime> for u64 {
+    type Output = PhysicalTime;
+
+    fn mul(self, rhs: PhysicalTime) -> Self::Output {
+        PhysicalTime(self * rhs.0)
+    }
+}
+
 impl ops::Rem for PhysicalTime {
     type Output = Self;
 
@@ -67,29 +74,21 @@ impl ops::Add for PhysicalTime {
     type Output = Self;
 
     fn add(self, rhs: PhysicalTime) -> Self::Output {
-        Self(self.0 + rhs.0)
+        Self(self.0.saturating_add(rhs.0))
     }
 }
 
 impl ops::AddAssign for PhysicalTime {
     fn add_assign(&mut self, rhs: Self) {
-        self.0 += rhs.0;
+        *self = *self + rhs;
     }
 }
 
 impl ops::Div for PhysicalTime {
-    type Output = Self;
+    type Output = u64;
 
     fn div(self, rhs: Self) -> Self::Output {
-        Self(self.0 / rhs.0)
-    }
-}
-
-impl ops::Mul for PhysicalTime {
-    type Output = Self;
-
-    fn mul(self, rhs: Self) -> Self::Output {
-        Self(self.0 * rhs.0)
+        self.0 / rhs.0
     }
 }
 

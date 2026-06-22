@@ -21,6 +21,7 @@ pub enum SimulationUpdate {
 pub struct EventsUpdate {
     pub time_range: Range<LogicalTime>,
     pub signals: Vec<SignalEvents>,
+    pub reports: Vec<Report>,
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
@@ -59,4 +60,22 @@ impl From<f64> for RawValue {
     fn from(value: f64) -> Self {
         Self(value.to_bits())
     }
+}
+
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub struct Report {
+    pub time: LogicalTime,
+    pub message: String,
+    pub severity: Severity,
+    pub file: String,
+    pub line: u32,
+    pub column: u32,
+}
+
+#[derive(Clone, Copy, Debug, Serialize, Deserialize)]
+pub enum Severity {
+    Note,
+    Warning,
+    Error,
+    Failure,
 }

@@ -4,34 +4,33 @@ use serde::Serialize;
 use crate::design_hierarchy::SignalElementId;
 use crate::time::PhysicalTime;
 
+/// A command to control the simulation.
 #[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
 pub enum Command {
-    #[serde(rename_all = "camelCase")]
+    /// Starts or resumes the simulation.
     RunSimulation { until: RunUntil },
-    #[serde(rename_all = "camelCase")]
+
+    /// Pauses the simulation.
     PauseSimulation,
-    #[serde(rename_all = "camelCase")]
+
+    /// Stops the simulation.
     StopSimulation,
 
-    #[serde(rename_all = "camelCase")]
+    /// Subscribes to the given signals.
     Subscribe(Vec<SignalElementId>),
-    #[serde(rename_all = "camelCase")]
+
+    /// Unsubscribes from the given signals.
     Unsubscribe(Vec<SignalElementId>),
 }
 
 #[derive(Clone, Copy, Debug, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
 pub enum RunUntil {
     /// Run until the simulation ends.
-    #[serde(rename_all = "camelCase")]
     UntilEnd,
 
     /// Run until the given time is reached.
-    #[serde(rename_all = "camelCase")]
     UntilTime { deadline: PhysicalTime },
 
     /// Run for the given duration.
-    #[serde(rename_all = "camelCase")]
     ForTime { duration: PhysicalTime },
 }

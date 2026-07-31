@@ -112,6 +112,9 @@ pub enum SignalType {
         max: f64,
         direction: Direction,
     },
+    Enumeration {
+        names: Vec<CompactString>,
+    },
     Array {
         left: i32,
         right: i32,
